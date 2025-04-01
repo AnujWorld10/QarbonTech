@@ -1,0 +1,25 @@
+# Method containing response headers.
+def add_headers(response):
+    response.headers["server"] = "False"
+    response.headers[
+        "Content-Security-Policy"
+    ] = "default-src 'self'; frame-ancestors 'self'; object-src 'none'; script-src 'none'; connect-src 'self'; img-src 'self'; style-src 'self'; form-action 'self'"
+    response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+    response.headers["Content-Type-Options"] = "nosniff"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers[
+        "Strict-Transport-Security"
+    ] = "max-age=31556926; includeSubDomains"
+    response.headers["Frame-Options"] = "DENY"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-Pagination-Throttled"] = "TRUE"
+    response.headers["Retry-After"] = "60"
+    response.headers["XSS-Protection"] = "1; mode=block"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Access-Control-Max-Age"] = "86400"
+    response.headers["Access-Control-Allow-Origin"] = "same-origin"
+    response.headers["Access-Control-Allow-Headers"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "*"
+    response.headers["Access-Control-Request-Headers"] = "*"
+    response.headers["Access-Control-Request-Method"] = "*"
+    response.headers["Cache-Control"] = "no-cache; no-store; must-revalidate"

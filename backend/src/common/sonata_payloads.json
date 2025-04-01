@@ -1,0 +1,107 @@
+{
+    "productorder_payloads": {
+        "id": "order-001",
+        "state": "acknowledged",
+        "cancellationDate":"2023-10-04T09:43:40.165Z",
+        "cancellationReason": "reason for cancel the product",
+        "cancellationReasonType": "technical",
+        "completionDate": "2023-08-16T14:39:06.165Z",
+        "href": "https://tools.ietf.org",
+        "product": {
+                    "id": "pid-01"
+                },
+        "cancellationCharge": [
+            {
+                "href": "https://charge.link.org",
+                "id": "charge-001"
+            }
+        ],
+        "stateChange": [
+            {
+                "changeDate": "2023-08-22T17:37:40.710Z",
+                "changeReason": "string",
+                "state": "acknowledged"
+            }
+        ],
+        "productOrderItem": {
+            "charge": [
+                {
+                    "href": "string",
+                    "id": "string"
+                }
+            ],
+            "completionDate": "2023-08-22T17:47:10.799Z",
+            "expectedCompletionDate": "2023-08-22T17:47:10.799Z",
+            "expediteAcceptedIndicator": false,
+            "itemTerm": [
+                {
+                    "description": "string",
+                    "duration": {
+                        "amount": 1,
+                        "units": "calendarMonths"
+                    },
+                    "endOfTermAction": "roll",
+                    "name": "string",
+                    "rollInterval": {
+                        "amount": 1,
+                        "units": "calendarMonths"
+                    }
+                }
+            ],
+            "milestone": [
+                {
+                    "date": "2023-08-22T17:47:10.799Z",
+                    "name": "mile stone string",
+                    "note": "string"
+                }
+            ],
+            "state": "acknowledged",
+            "stateChange": [
+                {
+                    "changeDate": "2023-08-22T17:47:10.799Z",
+                    "changeReason": "string",
+                    "state": "acknowledged"
+                }
+            ],
+            "terminationError": [
+                {
+                    "code": "missingProperty",
+                    "propertyPath": "string",
+                    "value": "string"
+                }
+            ]
+        }
+    },
+    "cancel_order_payload":{
+        "cancellationDeniedReason": "A technical reason for cancelling the ProductOrder",
+        "relatedContactInformation": [
+            {
+                "emailAddress": "Seller.Contact@example.com",
+                "name": "Seller Contact",
+                "number": "+12-345-678-90",
+                "organization": "seller",
+                "role": "cancelProductOrderSellerContact"
+            }
+        ],
+        "charge": {
+            "//first_comment":"Way to add comments in JSON file, Key should be unique and starte with //",
+            "href": "string",
+            "id": "cancelcharge-01"
+        },
+        "href": "https://tools.ietf.org",
+        "id": "cancel_id-01",
+        "state": "acknowledged"
+    },
+    "events_subscription":{
+        "id":"subId-001"
+    },
+    "modify_order_payload":{
+        "href": "https://href.example.com",
+        "id": "modify_order-001",
+        "order_state": "pending.assessingModification",
+        "order_item_state": "pending",
+        "state": "acknowledged"
+
+    } 
+ 
+}

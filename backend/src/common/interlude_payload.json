@@ -1,0 +1,50 @@
+{
+    "performanceprofile_model": {
+        "creationDate": "2023-08-09T09:54:36.706Z",
+        "href": "https://fastapi.tiangolo.com",
+        "id": "8df0981a-0949-11ee-be56-0242ac120030",
+        "lastModifiedDate": "2023-09-21T17:47:50.399Z",
+        "rejectionReason": "",
+        "state": "acknowledged"
+    },
+    "performancereport_model": {
+        "reportContent": [
+            {
+                "measurementTime": {
+                    "measurementStartDate": "2023-06-02T00:00:00.00",
+                    "measurementEndDate": "2023-06-03T01:00:00.00",
+                    "measurementInterval": "10 milliseconds"
+                },
+                "measurementDataPoints": [
+                    {
+                        "@type": "urn:mef:lso:spec:legato:ip-performance-monitoring-results:v0.0.1:all",
+                        "interface": {
+                            "ipvcEndpoint": [
+                                "6e4e338a-8105-481e-8bf6-b3ca768a4b89",
+                                "38bfa4c6-48a3-46e9-8746-bcba59f3cbc4"
+                            ],
+                            "name": "slsRpPairTest1",
+                            "description": "Exemplary performance monitoring service pair",
+                            "cloudService": true
+                        },
+                        "vlan": 100,
+                        "protocol": "IPV4",
+                        "packetsIn": 300,
+                        "charsIn": 30000,
+                        "packetsOut": 400,
+                        "charsOut": 40000,
+                        "utilizationIn": 60,
+                        "utilizationOut": 70,
+                        "peakUtilizationIn": 80,
+                        "peakUtilizationOut": 90
+                    }
+                ]
+            }
+        ],
+        "creationDate": "2023-06-03T08:02:01.370Z",
+        "href": "https://tools.ietf.org",
+        "id": "8ae5f9f3-554f-4d93-8314-1630f171da61",
+        "lastModifiedDate": "2023-06-05T08:02:01.370Z",
+        "state": "acknowledged"
+    }
+}

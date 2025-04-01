@@ -1,0 +1,373 @@
+{
+    "response_201": {
+        "description": "Created (https://tools.ietf.org/html/rfc7231#section-6.3.2)",
+        "content": {
+            "application/json;charset=utf-8": {
+                "schema": {
+                    "$ref": "#/components/schemas/PerformanceProfile"
+                }
+            }
+        }
+    },
+    "response_200": {
+        "description": "OK (https://tools.ietf.org/html/rfc7231#section-6.3.1)",
+        "content": {
+            "application/json;charset=utf-8": {
+                "schema": {
+                    "$ref": "#/components/schemas/PerformanceProfile"
+                }
+            }
+        }
+    },
+    "response_performancereport_200": {
+        "description": "OK  (https://tools.ietf.org/html/rfc7231#section-6.3.1)",
+        "content": {
+          "application/json;charset=utf-8": {
+            "schema": {
+              "$ref": "#/components/schemas/PerformanceReport_Find"
+            },
+            "example": {
+              "creationDate": "2023-08-24T06:36:30.236Z",
+              "description": "string",
+              "id": "string",
+              "performanceJob": {
+                "@type": "PerformanceJobRef"
+              },
+              "reportingTimeframe": {
+                "reportingStartDate": "2023-08-24T06:36:30.236Z",
+                "reportingEndDate": "2023-08-24T06:36:30.236Z"
+              },
+              "state": "acknowledged"
+                }
+            }
+        }
+    },
+    "response_performancereport_201": {
+        "description": "Created  (https://tools.ietf.org/html/rfc7231#section-6.3.2)",
+        "content": {
+            "application/json;charset=utf-8": {
+                "schema": {
+                    "$ref": "#/components/schemas/PerformanceReport"
+                },
+                "example": {
+                    "description": "string",
+                    "reportingTimeframe": {
+                        "reportingStartDate": "2023-08-28T12:42:03.724Z",
+                        "reportingEndDate": "2023-08-28T12:42:03.724Z"
+                    },
+                    "creationDate": "2023-08-28T12:42:03.724Z",
+                    "failureReason": "string",
+                    "href": "https://example.com/",
+                    "id": "string",
+                    "lastModifiedDate": "2023-08-28T12:42:03.724Z",
+                    "performanceJob": {
+                        "@type": "string"
+                    },
+                    "reportContent": [
+                        {
+                            "measurementTime": {
+                                "measurementStartDate": "2023-08-28T12:42:03.724Z",
+                                "measurementEndDate": "2023-08-28T12:42:03.724Z",
+                                "measurementInterval": "10 milliseconds"
+                            },
+                            "measurementDataPoints": [
+                                {
+                                    "@type": "string"
+                                }
+                            ]
+                        }
+                    ],
+                    "reportUrl": {
+                        "url": "string"
+                    },
+                    "state": "acknowledged"
+                }
+            }
+        }
+    },
+    "response_400": {
+        "description": "Bad Request",
+        "content": {
+            "application/json;charset=utf-8": {
+                "schema": {
+                    "$ref": "#/components/schemas/Error400"
+                },
+                "example": {
+                    "message": "string",
+                    "reason": "string",
+                    "referenceError": "string",
+                    "code": "missingQueryParameter"
+                }
+            }
+        }
+    },
+    "response_422": {
+        "description": "Unprocessable entity due to the business validation problems",
+        "content": {
+            "application/json;charset=utf-8": {
+                "schema": {
+                    "$ref": "#/components/schemas/Error422"
+                },
+                "example": {
+                    "message": "string",
+                    "reason": "string",
+                    "referenceError": "string",
+                    "code": "missingProperty",
+                    "propertyPath": "string"
+                }
+            }
+        }
+    },
+    "response_500": {
+        "description": "Internal Server Error",
+        "content": {
+            "application/json;charset=utf-8": {
+                "schema": {
+                    "$ref": "#/components/schemas/Error500"
+                },
+                "example": {
+                    "message": "string",
+                    "reason": "string",
+                    "referenceError": "string",
+                    "code": "missingProperty"
+                }
+            }
+        }
+    },
+    "response_401": {
+        "description": "Unauthorized",
+        "content": {
+            "application/json;charset=utf-8": {
+                "schema": {
+                    "$ref": "#/components/schemas/Error401"
+                },
+                "example": {
+                    "message": "string",
+                    "reason": "string",
+                    "referenceError": "string",
+                    "code": "missingCredentials"
+                }
+            }
+        }
+    },
+    "response_404": {
+        "description": "Not Found",
+        "content": {
+            "application/json;charset=utf-8": {
+                "schema": {
+                    "$ref": "#/components/schemas/Error404"
+                },
+                "example": {
+                    "message": "string",
+                    "reason": "string",
+                    "referenceError": "string",
+                    "code": "notFound"
+                }
+            }
+        }
+    },
+    "response_403": {
+        "description": "Forbidden",
+        "content": {
+            "application/json;charset=utf-8": {
+                "schema": {
+                    "$ref": "#/components/schemas/Error403"
+                },
+                "example": {
+                    "message": "string",
+                    "reason": "string",
+                    "referenceError": "string",
+                    "code": "accessDenied"
+                }
+            }
+        }
+    },
+    "response_408": {
+        "description": "Request Time-out (https://tools.ietf.org/html/rfc7231#section-6.5.7)",
+        "content": {
+            "application/json;charset=utf-8": {
+                "schema": {
+                    "$ref": "#/components/schemas/Error408"
+                },
+                "example": {
+                
+                        "reason": "string",
+                        "message": "string",
+                        "referenceError": "string",
+                        "code": "timeOut"
+                }
+            }
+        }
+    },
+    "response_204" : 
+    {
+    "description": "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+    },
+    "response_performancereportbyid_200": {
+        "description": "OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)",
+        "content": {
+            "application/json;charset=utf-8": {
+                "schema": {
+                    "$ref": "#/components/schemas/PerformanceReport"
+                }
+            }
+        }
+    },
+    "response_409": {
+        "description": "Conflict",
+        "content": {
+            "application/json;charset=utf-8": {
+                "schema": {
+                    "$ref": "#/components/schemas/Error409"
+                },
+                "example": {
+                    "message": "string",
+                    "reason": "string",
+                    "referenceError": "string",
+                    "code": "conflict"
+                }
+            }
+        }
+    },
+    "response_501": {
+        "description": "Method Not Implemented.",
+        "content": {
+            "application/json;charset=utf-8": {
+                "schema": {
+                    "$ref": "#/components/schemas/Error501"
+                },
+                "example": {
+                    "message": "string",
+                    "reason": "string",
+                    "referenceError": "string",
+                    "code": "notImplemented"
+                }
+            }
+        }
+    },
+    "response_performanceprofile_update_200":{
+        "description": "Updated (https://tools.ietf.org/html/rfc7231#section-6.3.1).",
+        "content": {
+            "application/json;charset=utf-8": {
+                "schema": {
+                    "$ref": "#/components/schemas/PerformanceProfile"
+                },
+                "example": {
+                    "buyerProfileId": "string",
+                    "description": "string",
+                    "granularity": "10 milliseconds",
+                    "jobPriority": 5,
+                    "jobType": "proactive",
+                    "outputFormat": "json",
+                    "reportingPeriod": "10 milliseconds",
+                    "resultFormat": "payload",
+                    "creationDate": "2023-09-13T07:23:16.693Z",
+                    "href": "string",
+                    "id": "string",
+                    "lastModifiedDate": "2023-09-13T07:23:16.693Z",
+                    "rejectionReason": "string",
+                    "state": "acknowledged"
+                }
+            }
+        }
+    },
+    "response_delete_204":
+        {
+            "description": "Deleted"
+        },
+    "response_charge_200":{
+            "description": "Success",
+            "content": {
+                "application/json;charset=utf-8": {
+                    "schema": {
+                        "$ref": "#/components/schemas/MEFProductOrderCharge"
+                    },
+                    "example": {
+                        "cancelProductOrder": {
+                            "href": "string",
+                            "id": "string"
+                          },
+                          "chargeItem": [
+                            {
+                              "acceptanceIndicator": "accepted",
+                              "activityType": "new",
+                              "blocking": true,
+                              "id": "string",
+                              "note": [
+                                {
+                                  "author": "string",
+                                  "date": "2023-10-03T09:06:37.532Z",
+                                  "id": "string",
+                                  "source": "buyer",
+                                  "text": "string"
+                                }
+                              ],
+                              "price": {
+                                "dutyFreeAmount": {
+                                  "unit": "string",
+                                  "value": 0
+                                },
+                                "taxIncludedAmount": {
+                                  "unit": "string",
+                                  "value": 0
+                                },
+                                "taxRate": 0
+                              },
+                              "priceCategory": "cancellation",
+                              "priceType": "recurring",
+                              "recurringChargePeriod": "hour",
+                              "state": "awaitingResponse",
+                              "unitOfMeasure": "string"
+                            }
+                          ],
+                          "creationDate": "2023-10-03T09:06:37.532Z",
+                          "href": "string",
+                          "id": "string",
+                          "modifyProductOrderItemRequestedDeliveryDate": {
+                            "href": "string",
+                            "id": "string"
+                          },
+                          "productOrder": {
+                            "productOrderHref": "string",
+                            "productOrderId": "string"
+                          },
+                          "productOrderItem": {
+                            "productOrderHref": "string",
+                            "productOrderId": "string",
+                            "productOrderItemId": "string"
+                          },
+                          "responseDueDate": "2023-10-03T09:06:37.532Z",
+                          "state": "awaitingResponse"
+                        }
+                    }
+                }
+    },
+    
+    "list_response_charge_200":{
+        "description": "Success",
+        "content": {
+            "application/json;charset=utf-8": {
+                "schema": {
+                    "$ref": "#/components/schemas/MEFProductOrderCharge_Find"
+                },
+                "example": {
+                          "creationDate": "2023-09-20T13:13:53.518Z",
+                          "id": "string",
+                          "productOrder": {
+                            "productOrderHref": "string",
+                            "productOrderId": "string"
+                          },
+                          "productOrderItem": {
+                            "productOrderHref": "string",
+                            "productOrderId": "string",
+                            "productOrderItemId": "string"
+                          },
+                          "responseDueDate": "2023-09-20T13:13:53.518Z",
+                          "state": "awaitingResponse"
+                        }
+                }
+            }
+        }
+
+    }
+    

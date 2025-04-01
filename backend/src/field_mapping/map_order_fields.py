@@ -1,0 +1,248 @@
+import json
+from pathlib import Path
+
+
+def map_order_fields(request_data, buyerId, sellerId, ccLoaAttachmentId):
+    """
+    Function for field mapping between MEF and QCL.
+
+    In case of an error, it returns:
+        - False*: Indicates a failure to map the fields.
+        - statusCode*: Specifies the HTTP status code for the error.
+        - message*: Provides a message describing the error.
+        - reason*: Indicates the reason for the error.
+        - reference_error: URL pointing to documentation explaining the error.
+        - messageCode*: A code associated with the error.
+        - PropertyPath: Only applicable in the case of a 422 error.
+
+    Otherwise, it returns:
+        - True*: Signifies successful field mapping.
+        - resultDict: Contains the mapped payload.
+    """
+
+    try:
+        current_directory = Path(__file__).parents[1]
+        file_name = 'field_mapping.json'
+        field_map_file_name = current_directory / 'common' / file_name
+
+        if not field_map_file_name.exists():
+            
+            statusCode = 404
+            message = f"{file_name} file not found"
+            reason = "File not found"
+            reference_error = "https://pythonguides.com/file-does-not-exist-python/"
+            messageCode = "notFound"
+            PropertyPath = None
+            return False, statusCode, message, reason, reference_error, messageCode, PropertyPath
+
+        try:
+            with open(field_map_file_name, "r") as json_file:
+                json_data = json.load(json_file)
+        
+        except json.JSONDecodeError as e: 
+            
+            statusCode = 404
+            message = "Record not found in field_mapping.json file"
+            reason = "Record not found"
+            reference_error = "https://pythonguides.com/file-does-not-exist-python/"
+            messageCode = "notFound"
+            PropertyPath = None
+            return False, statusCode, message, reason, reference_error, messageCode, PropertyPath
+        
+        field_json = json_data.get("qcl_cc_order")
+        qcl_request_dict = {}
+        transaction_data = request_data.get("transactionData")
+
+        if transaction_data:
+            qcl_gereric_data_key = field_json.get("qclGenericData")
+            qcl_source_key = field_json.get("buyerId")
+            qcl_dest_key = field_json.get("sellerId")
+
+            if qcl_gereric_data_key and qcl_dest_key and qcl_source_key:
+                qcl_request_dict.update(
+                    {
+                        qcl_gereric_data_key: {
+                                qcl_source_key: buyerId,
+                                qcl_dest_key: sellerId
+                            }
+                        })
+
+                qcl_transaction_key = field_json.get("transactionData")
+                qcl_generic_field_key = field_json.get("genericFields")
+                qcl_dest_field_key = field_json.get("destinationFields")
+                qcl_src_field_key = field_json.get("sourceFields")
+
+                qcl_request_dict.update(
+                    {
+                        qcl_transaction_key: {
+                            qcl_generic_field_key: transaction_data.get("genericFields"),
+                            qcl_dest_field_key: transaction_data.get("destinationFields"),
+                            qcl_src_field_key: {}  
+                        }
+                    })
+                
+                
+                qcl_src_val = transaction_data.get("sourceFields")
+                qcl_poid_key = field_json.get("externalId")
+                # qcl_poid_val = qcl_src_val.get("poId") #used externalId
+
+                qcl_request_dict[qcl_transaction_key][qcl_src_field_key][qcl_poid_key] = request_data.get("externalId")
+
+                qcl_item_key = field_json.get("itemDetails")
+
+                qcl_request_dict[qcl_transaction_key][qcl_src_field_key][qcl_item_key] = []
+                qcl_item_list = qcl_request_dict[qcl_transaction_key][qcl_src_field_key][qcl_item_key]
+                
+                qcl_item_value = qcl_src_val.get("itemDetails")
+                for index, item in enumerate(qcl_item_value,1):
+                    
+                    if not item.get("crossConnectDetails"):
+                        status_msg_code = 422
+                        message = "'crossConnectDetails' MUST not be empty, when 'action' is set to 'add'"
+                        reason = "Validation error"
+                        reference_error = "https://docs.pydantic.dev/latest/errors/validation_errors/"
+                        message_code = "invalidValue"
+                        property_path = None
+                        
+                        return False, status_msg_code, message, reason, reference_error, message_code, property_path
+                    
+                    item_dict = {}
+
+                    productorderitem_length = len(request_data.get("productOrderItem"))
+                    if index > productorderitem_length:
+                        
+                        statusCode = 422
+                        message = "Number of itemDetails must not exceed number of productOrderItem"
+                        reason = "Too many records"
+                        reference_error = "https://example.com/"
+                        messageCode = "tooManyRecords"
+                        PropertyPath = "https://tools.ietf.org/html/rfc6901"
+                        return False, statusCode, message, reason, reference_error, messageCode, PropertyPath
+
+                    item_dict[field_json.get("productOrderItemId")] = request_data.get("productOrderItem")[index-1]["id"]
+
+                    if item.get("inventoryItemName") != "Cross Connect":
+                        
+                        statusCode = 422
+                        message = "inventoryItemName should be 'Cross Connect'"
+                        reason = "Invalid value"
+                        reference_error = "https://example.com/"
+                        messageCode = "invalidValue"
+                        PropertyPath = "https://tools.ietf.org/html/rfc6901"
+                        return False, statusCode, message, reason, reference_error, messageCode, PropertyPath
+                    
+                    item_dict[field_json.get("inventoryItemName")] = item.get("inventoryItemName")
+                    
+                    original_item_key = field_json.get("originalItemDetails")
+                    item_dict[original_item_key] = item.get("originalItemDetails")
+
+                    cc_details_key = field_json.get("crossConnectDetails")
+                    cc_details_val = item.get("crossConnectDetails")
+
+                    item_dict[cc_details_key] = {}
+
+                    request_date_val = cc_details_val.get("ccRequestDate")
+                    
+                    if request_date_val is not None:
+                        item_dict[cc_details_key][field_json.get("ccRequestDate")] = str(request_date_val)
+                    
+                    # fetching aside key and value 
+                    aside_key = field_json.get("ccASideDetails")
+                    aside_val = cc_details_val.get("ccASideDetails")
+                    item_dict[cc_details_key][aside_key] = {}
+
+                    cc_account_id = aside_val.get("ccAccountId")
+                    cc_pod_id = aside_val.get("ccPodId")
+                    cc_model_id = aside_val.get("ccModelId")
+                    cc_port_id = aside_val.get("ccPortId")
+                    
+                    # fetching zside key and value 
+                    zside_key = field_json.get("ccZSideDetails")
+                    zside_val = cc_details_val.get("ccZSideDetails")
+
+                    cc_zSideprovider_name = zside_val.get("ccZSideProviderName")
+
+                    if sellerId == "CYX" and not all([cc_account_id, cc_pod_id, cc_model_id, cc_port_id, 
+                                                      cc_zSideprovider_name, ccLoaAttachmentId, request_date_val]):
+                        
+                        statusCode = 422
+                        message = "When the sellerId is set to 'CYX,' following fields must be provided: 'ccRequestDate', 'ccAccountId, 'ccPodId', 'ccModelId', 'ccPortId', 'ccZSideProviderName' and 'ccLoaAttachmentId'"
+                        reason = "Invalid value"
+                        reference_error = "https://example.com/"
+                        messageCode = "invalidValue"
+                        PropertyPath = "https://tools.ietf.org/html/rfc6901"
+                        return False, statusCode, message, reason, reference_error, messageCode, PropertyPath
+
+                    item_dict[cc_details_key][aside_key][field_json.get("ccAccountId")] = cc_account_id
+                    item_dict[cc_details_key][aside_key][field_json.get("ccPodId")] = cc_pod_id
+
+                    item_dict[cc_details_key][aside_key][field_json.get("ccModelId")] = cc_model_id
+                    item_dict[cc_details_key][aside_key][field_json.get("ccPortId")] = cc_port_id
+
+                    # Validate aside required fields for EQX
+                    cc_asidepatchpanel_id = aside_val.get("ccASidePatchPanelId")
+                    cc_connection_service = aside_val.get("ccConnectionService")
+
+                    cc_media_type = aside_val.get("ccMediaType")
+                    cc_protocol_type = aside_val.get("ccProtocolType")
+                    cc_connector_type = aside_val.get("ccConnectorType")
+                    
+                    cc_patchpanelport_a = aside_val.get("ccPatchPanelPortA")
+                    cc_patchpanelport_b = aside_val.get("ccPatchPanelPortB")
+
+                    # Validate zside required fields for EQX
+                    cc_zsidepatchpanel_id = zside_val.get("ccZSidePatchPanelId")                
+                    cc_zconnector_type = zside_val.get("ccConnectorType")
+                    
+                    cc_zpatchpanelport_a = zside_val.get("ccPatchPanelPortA")
+                    cc_zpatchpanelport_b = zside_val.get("ccPatchPanelPortB")
+
+                    if sellerId == "EQX" and not all([cc_asidepatchpanel_id, cc_connection_service, cc_media_type,
+                                                       cc_protocol_type, cc_connector_type, cc_patchpanelport_a, 
+                                                       cc_patchpanelport_b, cc_zsidepatchpanel_id, cc_zconnector_type,
+                                                       cc_zpatchpanelport_a, cc_zpatchpanelport_b]):
+                        
+                        statusCode = 422
+                        message = "When the sellerId is set to 'EQX,' following fields must be provided: 'ccASidePatchPanelId', 'ccConnectionService', 'ccMediaType', 'ccProtocolType', 'ccConnectorType', 'ccPatchPanelPortA', 'ccPatchPanelPortB', and 'ccZSidePatchPanelId'"
+                        reason = "Invalid value"
+                        reference_error = "https://example.com/"
+                        messageCode = "invalidValue"
+                        PropertyPath = "https://tools.ietf.org/html/rfc6901"
+                        return False, statusCode, message, reason, reference_error, messageCode, PropertyPath
+                    
+                    item_dict[cc_details_key][aside_key][field_json.get("ccASidePatchPanelId")] = cc_asidepatchpanel_id
+                    item_dict[cc_details_key][aside_key][field_json.get("ccConnectionService")] = cc_connection_service
+
+                    item_dict[cc_details_key][aside_key][field_json.get("ccMediaType")] = cc_media_type
+                    item_dict[cc_details_key][aside_key][field_json.get("ccProtocolType")] = cc_protocol_type
+                    item_dict[cc_details_key][aside_key][field_json.get("ccConnectorType")] = cc_connector_type
+                    
+                    item_dict[cc_details_key][aside_key][field_json.get("ccPatchPanelPortA")] = cc_patchpanelport_a
+                    item_dict[cc_details_key][aside_key][field_json.get("ccPatchPanelPortB")] = cc_patchpanelport_b
+
+
+                    item_dict[cc_details_key][zside_key] = {}
+
+                    item_dict[cc_details_key][zside_key][field_json.get("ccZSidePatchPanelId")] = zside_val.get("ccZSidePatchPanelId")                
+                    item_dict[cc_details_key][zside_key][field_json.get("ccConnectorType")] = zside_val.get("ccConnectorType")
+                    
+                    item_dict[cc_details_key][zside_key][field_json.get("ccPatchPanelPortA")] = zside_val.get("ccPatchPanelPortA")
+                    item_dict[cc_details_key][zside_key][field_json.get("ccPatchPanelPortB")] = zside_val.get("ccPatchPanelPortB")
+                    
+                    item_dict[cc_details_key][zside_key][field_json.get("ccZSideProviderName")] = zside_val.get("ccZSideProviderName")
+                    item_dict[cc_details_key][zside_key][field_json.get("ccLoaAttachmentId")] = ccLoaAttachmentId
+
+                    qcl_item_list.append(item_dict)
+
+            return True, 200, qcl_request_dict, None, None, None, None
+    
+    except Exception as e:
+        
+        statusCode = 500
+        message =  str(e)
+        reason = "Invalid value"
+        reference_error = "https://example.com/"
+        messageCode = "internalError"
+        PropertyPath = None
+        return False, statusCode, message, reason, reference_error, messageCode, PropertyPath
+    

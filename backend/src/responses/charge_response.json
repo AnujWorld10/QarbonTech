@@ -1,0 +1,181 @@
+
+{
+    "001": {
+        "cancelProductOrder": {
+          "href": "https://charge.link.org",
+          "id": "charge-001"
+        },
+        "chargeItem": [
+          {
+            "acceptanceIndicator": "accepted",
+            "activityType": "new",
+            "blocking": true,
+            "id": "item-001",
+            "note": [
+              {
+                "author": "charge",
+                "date": "2024-09-30T10:11:59.832Z",
+                "id": "1",
+                "source": "buyer",
+                "text": "We have an equipment swap and the requirements will change. Will issue another Product Order"
+              }
+            ],
+            "price": {
+              "dutyFreeAmount": {
+                "unit": "USD",
+                "value": 10
+              },
+              "taxIncludedAmount": {
+                "unit": "USD",
+                "value": 10
+              },
+              "taxRate": 8
+            },
+            "priceCategory": "cancellation",
+            "priceType": "recurring",
+            "recurringChargePeriod": "hour",
+            "state": "awaitingResponse",
+            "unitOfMeasure": "USD"
+          }
+        ],
+        "creationDate": "2023-09-30T10:11:59.832Z",
+        "href": "https://charge.link.org",
+        "id": "00000000-0000-0000-0000-000000000678",
+        "buyerId":"buyer-001",
+        "sellerId":"seller-001",
+        "modifyProductOrderItemRequestedDeliveryDate": {
+          "href":  "https://charge.link.org",
+          "id": "item-001"
+        },
+        "productOrder": {
+          "productOrderHref": "{{baseUrl}}/charge/00000000-0000-1111-0000-00000000000",
+          "productOrderId": "00000000-1111-2222-3333-000000000121"
+        },
+        "productOrderItem": {
+          "productOrderHref": "{{baseUrl}}/charge/00000000-0000-1111-0000-00000000000",
+          "productOrderId": "00000000-1111-2222-3333-000000000001",
+          "productOrderItemId": "item-001"
+        },
+        "responseDueDate": "2023-09-30T10:11:59.832Z",
+        "state": "awaitingResponse"
+      },
+      "002": {
+        "cancelProductOrder": {
+          "href": "https://charge.link.org",
+          "id": "charge-002"
+        },
+        "chargeItem": [
+          {
+            "acceptanceIndicator": "accepted",
+            "activityType": "new",
+            "blocking": true,
+            "id": "item-002",
+            "note": [
+              {
+                "author": "charge",
+                "date": "2024-09-30T10:11:59.832Z",
+                "id": "2",
+                "source": "buyer",
+                "text": "We have an equipment swap and the requirements will change. Will issue another Product Order"
+              }
+            ],
+            "price": {
+              "dutyFreeAmount": {
+                "unit": "USD",
+                "value": 10
+              },
+              "taxIncludedAmount": {
+                "unit": "USD",
+                "value": 10
+              },
+              "taxRate": 8
+            },
+            "priceCategory": "cancellation",
+            "priceType": "recurring",
+            "recurringChargePeriod": "hour",
+            "state": "awaitingResponse",
+            "unitOfMeasure": "USD"
+          }
+        ],
+        "creationDate": "2023-09-30T10:11:59.832Z",
+        "href": "https://charge.link.org",
+        "id": "00000000-0000-0000-0000-000000000677",
+        "buyerId":"buyer-002",
+        "sellerId":"seller-002",
+        "modifyProductOrderItemRequestedDeliveryDate": {
+          "href":  "https://charge.link.org",
+          "id": "item-002"
+        },
+        "productOrder": {
+          "productOrderHref": "{{baseUrl}}/charge/00000000-0000-1111-0000-00000000000",
+          "productOrderId": "00000000-1111-2222-3333-000000000122"
+        },
+        "productOrderItem": {
+          "productOrderHref": "{{baseUrl}}/charge/00000000-0000-1111-0000-00000000000",
+          "productOrderId": "00000000-1111-2222-3333-000000000002",
+          "productOrderItemId": "item-002"
+        },
+        "responseDueDate": "2023-09-30T10:11:59.832Z",
+        "state": "awaitingResponse"
+      },
+      "003": {
+        "cancelProductOrder": {
+          "href": "https://charge.link.org",
+          "id": "charge-001"
+        },
+        "chargeItem": [
+          {
+            "acceptanceIndicator": "accepted",
+            "activityType": "new",
+            "blocking": true,
+            "id": "item-003",
+            "note": [
+              {
+                "author": "charge",
+                "date": "2024-09-30T10:11:59.832Z",
+                "id": "1",
+                "source": "buyer",
+                "text": "We have an equipment swap and the requirements will change. Will issue another Product Order"
+              }
+            ],
+            "price": {
+              "dutyFreeAmount": {
+                "unit": "USD",
+                "value": 10
+              },
+              "taxIncludedAmount": {
+                "unit": "USD",
+                "value": 10
+              },
+              "taxRate": 8
+            },
+            "priceCategory": "cancellation",
+            "priceType": "recurring",
+            "recurringChargePeriod": "hour",
+            "state": "awaitingResponse",
+            "unitOfMeasure": "USD"
+          }
+        ],
+        "creationDate": "2023-09-30T10:11:59.832Z",
+        "href": "https://charge.link.org",
+        "id": "00000000-0000-0000-0000-000000000679",
+        "buyerId":"buyer-003",
+        "sellerId":"seller-003",
+        "modifyProductOrderItemRequestedDeliveryDate": {
+          "href":  "https://charge.link.org",
+          "id": "item-003"
+        },
+        "productOrder": {
+          "productOrderHref": "{{baseUrl}}/charge/00000000-0000-1111-0000-00000000000",
+          "productOrderId": "00000000-1111-2222-3333-000000000123"
+        },
+        "productOrderItem": {
+          "productOrderHref": "{{baseUrl}}/charge/00000000-0000-1111-0000-00000000000",
+          "productOrderId": "00000000-1111-2222-3333-000000000003",
+          "productOrderItemId": "item-003"
+        },
+        "responseDueDate": "2023-09-30T10:11:59.832Z",
+        "state": "awaitingResponse"
+      }
+    }
+    

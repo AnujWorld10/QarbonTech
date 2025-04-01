@@ -1,0 +1,9 @@
+{
+    "origin": {
+        "origin_1": "https://lattice-sandbox.qarbontech.io/api/v1/accounting/crossconnect/",
+        "origin_2": "https://lattice-sandbox.qarbontech.io/api/v1/"
+    },
+    "auth":{
+        "origin":"https://lattice-sandbox.qarbontech.io/api/oauth/token"
+    }
+}
